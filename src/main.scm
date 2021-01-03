@@ -1,0 +1,1 @@
+(display "Ich hasse Scheme")
