@@ -1,4 +1,7 @@
-(display "Ich hasse Scheme")
-(+ (1 1))
-(- 2 3
-)
+(define *lex*
+'((cat katze)
+  (dog hund)
+  (eats frisst)
+  (jumps springt)
+  (the die) 
+  (the der)))
