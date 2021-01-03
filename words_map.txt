@@ -1,9 +1,5 @@
-(define english_text '("I" "love" "Scheme"))
-(define german_text '("Scheiße"))
 (define lex
     '(
-
-        ("eats" "frisst")
         ("Eve" "Abend")
         ("but" "aber")
         ("eight" "acht")
@@ -40,7 +36,6 @@
         ("at the" "beim")
         ("leg" "Bein")
         ("example" "Beispiel")
-        ("goes" "geht")
         ("bite" "beißen")
         ("get" "bekommen")
         ("mountain" "Berg")
@@ -103,7 +98,6 @@
         ("easy" "einfach")
         ("some" "einige")
         ("some" "einigen")
-        ("Computer Science" "Informatik")
         ("once" "einmal")
         ("ice" "Eis")
         ("parents" "Eltern")
@@ -112,7 +106,6 @@
         ("earth" "Erde")
         ("explain" "erklären")
         ("frighten" "erschrecken")
-        ("awesome" "toll")
         ("first" "erst")
         ("tell" "erzählen")
         ("eat" "essen")
@@ -163,7 +156,6 @@
         ("walk" "gehen")
         ("belong" "gehören")
         ("yellow" "gelb")
-        ("Scheme" "Scheiße")
         ("money" "Geld")
         ("I agree" "genau")
         ("straight" "gerade")
@@ -228,7 +220,6 @@
         ("Yes" "ja")
         ("year" "Jahr")
         ("everyone" "jeder")
-        ("love" "liebe")
         ("now" "jetzt")
         ("young" "jung")
         ("Boy" "Junge")
@@ -518,33 +509,3 @@
         ("between" "zwischen")
     )
 )
-
-(define print_word
-  (lambda (word)
-    (display (string-append word " ") )))
-
-(define translate
-  (lambda (from_index to_index text)
-    (map 
-      (lambda (word) 
-        (map 
-          (lambda (lex_entry)
-            (if (eqv? (string-downcase word) (string-downcase (list-ref lex_entry from_index)))
-              (print_word (list-ref lex_entry to_index)))
-          )
-        lex)
-      )
-    text)
-  )
-)
-
-(print "--------------------------------------------------")
-(print "English -> German:")
-(translate 0 1 english_text)
-
-(print "")
-(print "--------------------------------------------------")
-(print "German -> English:")
-(translate 1 0 german_text)
-(print "")
-(print "--------------------------------------------------")
