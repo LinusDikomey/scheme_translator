@@ -28,7 +28,7 @@
         ("on" "auf")
         ("eye" "Auge")
         ("out" "aus")
-        ("automobile" "Auto")
+        ("car" "Auto")
         ("bathe" "baden")
         ("soon" "bald")
         ("ball" "Ball")
