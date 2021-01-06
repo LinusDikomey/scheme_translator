@@ -1,2 +1,2 @@
 Um den Text zu übersezten müssen die einzelnen Wörter in Anführungszeichen bei define english_text bzw. bei define german_text eingegeben werden. Wird das Programm gerunt, so wird die 
-Übersetzung ausgegeben, wennn die benötigten Wörter im Lexikon eingetragen sind
+Übersetzung ausgegeben, wennn die benötigten Wörter im Lexikon eingetragen sind. Deutsche Verben müssen dabei im Infinitiv eingegeben werden. Nicht in der konjugierten Form!!
