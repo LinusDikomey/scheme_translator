@@ -1,5 +1,6 @@
 (define english_text '("He" "answers" "to" "Scheme"))
-(define german_text '("Er" "schlafen" "tief" "und" "Linus"))
+(define german_text '("Affe" "rennt" "tief" "und" "Linus"))
+
 (define lex
     '(
 
@@ -521,14 +522,42 @@
     )
 )
 
+(define pronouns
+  '(
+    ("I" "ich" 0)
+    ("monkey" "Affe" 2)
+    ("he" "er" 2)
+    ("she" "sie" 2)
+    ("it" "es" 2) 
+  )
+)
+
+(define verbs
+  '(
+    (("run" "run" "runs" "run" "run" "run") ("renne" "rennst" "rennt" "rennen" "rennt" "rennen"))
+  )
+)
+
 (define print_word
   (lambda (word)
     (display (string-append word " ") )))
 
-(define translate
-  (lambda (from_index to_index text)
+(define translate_verb
+  (lambda (text index from_index to_index verb_index)
+    (define word (list-ref text index))
+    (define verb_translations (list))
     (map 
-      (lambda (word)
+      (lambda (verb_entry)
+        (cond
+          [(eqv? (string-downcase word) (string-downcase (list-ref (list-ref verb_entry from_index) verb_index)))
+            (set! verb_translations (cons (list-ref (list-ref verb_entry to_index) verb_index) verb_translations))
+          ]
+        )
+      ) verbs
+    )
+    (cond
+      [(> (length verb_translations) 0) (print_word (car verb_translations))]
+      [(= (length verb_translations) 0)
         (define translations (list))
         (map 
           (lambda (lex_entry)
@@ -537,25 +566,92 @@
                 (set! translations (cons (list-ref lex_entry to_index) translations))
               ]
             )
-          )
-        lex)
+          ) lex
+        )
         (cond
           [(= (length translations) 0) (print_word "[no translation found]")]
           [(= (length translations) 1) (print_word (car translations))]
           [(> (length translations) 1) (display translations) (display " ")]
         )
+      ]
+    )
+  )
+)
+
+
+
+(define translate
+  (lambda (text from_index to_index)
+    (define translate_loop 
+      (lambda (index)
+        (define translate_word 
+          (lambda ()
+            (define word (list-ref text index))
+            (define pronoun_translations (list))
+            (map 
+              (lambda (pronoun_entry)
+                (cond 
+                  [(eqv? (string-downcase word) (string-downcase (list-ref pronoun_entry from_index)))
+                    (set! pronoun_translations 
+                      (cons (list (list-ref pronoun_entry to_index) (list-ref pronoun_entry 2)) pronoun_translations) 
+                    )
+                  ]
+                )
+              ) pronouns
+            )
+            (cond
+              ;pronoun, try to read verb next
+              [(> (length pronoun_translations) 0)
+                (print_word (list-ref (car pronoun_translations) 0))
+                (define verb_index (list-ref (car pronoun_translations) 1))
+                (translate_verb text (+ index 1) from_index to_index verb_index)
+                (set! index (+ index 1))
+              ]
+              ; normal word
+              [(= (length pronoun_translations) 0)
+                (define translations (list))
+                (map 
+                  (lambda (lex_entry)
+                    (cond 
+                      [(eqv? (string-downcase word) (string-downcase (list-ref lex_entry from_index)))
+                        (set! translations (cons (list-ref lex_entry to_index) translations))
+                      ]
+                    )
+                  ) lex
+                )
+                (cond
+                  [(= (length translations) 0) (print_word "[no translation found]")]
+                  [(= (length translations) 1) (print_word (car translations))]
+                  [(> (length translations) 1) (display translations) (display " ")]
+                )
+              ]
+            )
+          )
+        )
+
+        (cond
+          [(< index (length text))
+            ;(display "Translating ")
+            ;(display (list-ref text index))
+            ;(display ":")
+            (translate_word text index from_index to_index)
+            ;(display "  |  ")
+            (translate_loop (+ index 1))
+          ]
+        )
       )
-    text)
+    )
+    (translate_loop 0)
   )
 )
 
 (print "--------------------------------------------------")
 (print "English -> German:")
-(translate 0 1 english_text)
+(translate english_text 0 1)
 
 (print "")
 (print "--------------------------------------------------")
 (print "German -> English:")
-(translate 1 0 german_text)  
+(translate german_text 1 0)  
 (print "")
 (print "--------------------------------------------------")
