@@ -1,5 +1,5 @@
-(define english_text '("He" "answers" "to" "Scheme"))
-(define german_text '("Affe" "rennt" "tief" "und" "Linus"))
+(define english_text '("Monkey" "walks" "bathe"))
+(define german_text '("Affe" "yeetet" "allein" "beide" "Beine" "und" "er" "isst" "Bauern" "und" "er" "fliegt" "dann" "weg"))
 
 (define lex
     '(
@@ -42,6 +42,7 @@
         ("both" "beide")
         ("at the" "beim")
         ("leg" "Bein")
+        ("legs" "Beine")
         ("example" "Beispiel")
         ("goes" "geht")
         ("bite" "beißen")
@@ -470,7 +471,7 @@
         ("What" "was")
         ("wash" "waschen")
         ("water" "Wasser")
-        ("path" "weg")
+        ("away" "weg")
         ("path" "Weg")
         ("Christmas" "Weihnachten")
         ("because" "weil")
@@ -525,16 +526,25 @@
 (define pronouns
   '(
     ("I" "ich" 0)
+    ("you" "du" 1)
     ("monkey" "Affe" 2)
     ("he" "er" 2)
     ("she" "sie" 2)
-    ("it" "es" 2) 
+    ("it" "es" 2)
+    ("we" "wir" 3)
+    ("you" "ihr" 4)
+    ("they" "sie" 5)
   )
 )
 
 (define verbs
   '(
     (("run" "run" "runs" "run" "run" "run") ("renne" "rennst" "rennt" "rennen" "rennt" "rennen"))
+    (("live" "live" "lives" "live" "live" "live") ("lebe" "lebst" "lebt" "leben" "lebt" "leben"))
+    (("walk" "walk" "walks" "walk" "walk" "walk") ("gehe" "gehst" "geht" "gehen" "geht" "gehen"))
+    (("fly" "fly" "flies" "fly" "fly" "fly") ("fliege" "fliegst" "fliegt" "fliegen" "fliegt" "fliegen"))
+    (("yeet" "yeet" "yeets" "yeet" "yeet" "yeet") ("yeete" "yeetest" "yeetet" "yeeten" "yeetet" "yeeten"))
+    (("eat" "eat" "eats" "eat" "eat" "eat") ("esse" "isst" "isst" "essen" "esst" "essen"))
   )
 )
 
