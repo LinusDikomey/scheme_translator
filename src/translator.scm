@@ -1,9 +1,10 @@
-(define english_text '("I" "love" "Scheme"))
-(define german_text '("Scheiße"))
+(define english_text '("He" "answers" "to" "Scheme"))
+(define german_text '("Er" "schlafen" "tief" "und" "Linus"))
 (define lex
     '(
 
         ("eats" "frisst")
+        ("He" "Er")
         ("Eve" "Abend")
         ("but" "aber")
         ("eight" "acht")
@@ -20,6 +21,7 @@
         ("anxiety" "Angst")
         ("reply" "antworten")
         ("answer" "beantworten")
+        ("answers" "beantwortet")
         ("Apple" "Apfel")
         ("job" "Arbeit")
         ("work" "arbeiten")
@@ -526,13 +528,22 @@
 (define translate
   (lambda (from_index to_index text)
     (map 
-      (lambda (word) 
+      (lambda (word)
+        (define translations (list))
         (map 
           (lambda (lex_entry)
-            (if (eqv? (string-downcase word) (string-downcase (list-ref lex_entry from_index)))
-              (print_word (list-ref lex_entry to_index)))
+            (cond 
+              [(eqv? (string-downcase word) (string-downcase (list-ref lex_entry from_index)))
+                (set! translations (cons (list-ref lex_entry to_index) translations))
+              ]
+            )
           )
         lex)
+        (cond
+          [(= (length translations) 0) (print_word "[no translation found]")]
+          [(= (length translations) 1) (print_word (car translations))]
+          [(> (length translations) 1) (display translations) (display " ")]
+        )
       )
     text)
   )
